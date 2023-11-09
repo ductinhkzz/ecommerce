@@ -6,22 +6,15 @@
 ## Installation
 
 ```bash
-$ npm install -g nest yarn
+npm install -g nest yarn
 ```
 
 ```bash
-$ yarn install
+yarn install
 ```
 
 ## Running the app
 
 ```bash
-# development
-$ yarn run start
-
-# watch mode
-$ yarn run start:dev
-
-# production mode
-$ yarn run start:prod
+yarn run start:dev
 ```
