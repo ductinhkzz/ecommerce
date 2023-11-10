@@ -13,6 +13,15 @@ npm install -g nest yarn
 yarn install
 ```
 
+## Go to .env file
+
+Change your config
+```
+DB_USERNAME=postgres
+DB_PASSWORD=yourpass
+DB_DATABASE=test
+```
+
 ## Running the app
 
 ```bash

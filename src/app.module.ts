@@ -1,29 +1,22 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import configuration from './config/configuration';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { ProductModule } from './product/product.module';
-import { CategoryModule } from './category/category.module';
-import { ManufacturerModule } from './manufacturer/manufacturer.module';
+import { ConfigModule } from '@nestjs/config';
+import { configSchema } from './common/validations';
+import { ProductModule } from './modules/product/product.module';
+import { CategoryModule } from './modules/category/category.module';
+import { ManufacturerModule } from './modules/manufacturer/manufacturer.module';
+import { DataSourceModule } from './database/datasource.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
-      load: [configuration],
       isGlobal: true,
+      envFilePath: '.env',
+      validationSchema: configSchema,
     }),
-    TypeOrmModule.forRootAsync({
-      imports: [ConfigModule],
-      useFactory: (config: ConfigService) => config.get('database'),
-      inject: [ConfigService],
-    }),
+    DataSourceModule,
     ProductModule,
     CategoryModule,
     ManufacturerModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
 })
 export class AppModule {}
