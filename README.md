@@ -27,3 +27,5 @@ DB_DATABASE=test
 ```bash
 yarn run start:dev
 ```
+
+## Go to http://localhost:5000/docs to view API Document
