@@ -13,7 +13,6 @@ import {
 } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { CreateProductDto, UpdateProductDto } from './dtos';
-import { UUID } from 'crypto';
 import { PageDto, PageOptionsDto } from '@/common/dtos';
 import { ApiNoContentResponse, ApiOkResponse } from '@nestjs/swagger';
 import { ProductEntity } from '@/database/entities';
@@ -32,7 +31,7 @@ export class ProductController {
   @Get(':id')
   @HttpCode(HttpStatus.OK)
   @ApiOkResponse({ type: ProductEntity })
-  getProduct(@Param('id', new ParseUUIDPipe()) id: UUID) {
+  getProduct(@Param('id', new ParseUUIDPipe({ version: '4' })) id: string) {
     return this.productService.getProduct(id);
   }
 
@@ -40,7 +39,7 @@ export class ProductController {
   @HttpCode(HttpStatus.NO_CONTENT)
   @ApiNoContentResponse()
   updateProduct(
-    @Param('id', new ParseUUIDPipe()) id: UUID,
+    @Param('id', new ParseUUIDPipe({ version: '4' })) id: string,
     @Body() updateData: UpdateProductDto,
   ) {
     return this.productService.updateProduct(id, updateData);
@@ -49,7 +48,7 @@ export class ProductController {
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
   @ApiNoContentResponse()
-  deleteProduct(@Param('id', new ParseUUIDPipe()) id: UUID) {
+  deleteProduct(@Param('id', new ParseUUIDPipe({ version: '4' })) id: string) {
     return this.productService.deleteProduct(id);
   }
 

@@ -2,7 +2,6 @@ import { NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DeepPartial, Repository } from 'typeorm';
 import { CreateProductDto, UpdateProductDto } from './dtos';
-import { UUID } from 'crypto';
 import { PaginationService } from '@/common/services';
 import {
   CategoryEntity,
@@ -51,7 +50,7 @@ export class ProductService extends PaginationService<ProductEntity> {
     return this.create(newProduct);
   }
 
-  async updateProduct(id: UUID, updateData: UpdateProductDto) {
+  async updateProduct(id: string, updateData: UpdateProductDto) {
     const category = await this.categoryRepository.findOne({
       where: { id: updateData.category },
     });
@@ -77,7 +76,7 @@ export class ProductService extends PaginationService<ProductEntity> {
     return this.update(id, newProduct);
   }
 
-  async deleteProduct(id: UUID) {
+  async deleteProduct(id: string) {
     return this.delete(id);
   }
 
@@ -90,7 +89,7 @@ export class ProductService extends PaginationService<ProductEntity> {
     return this.paginateQueryBuilder(query, options);
   }
 
-  async getProduct(id: UUID) {
+  async getProduct(id: string) {
     return this.findById(id);
   }
 }

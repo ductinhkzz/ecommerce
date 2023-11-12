@@ -15,15 +15,11 @@ import { validationOptions } from './validators';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { cors: false });
   const configService = app.get(ConfigService);
-  // app.enableCors({
-  //   origin: configService.get('FE_CORS').split(','),
-  //   credentials: true,
-  // });
-  app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-    res.header('Access-Control-Allow-Headers', 'Content-Type, Accept');
-    next();
+  app.enableCors({
+    origin: true,
+    credentials: true,
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    allowedHeaders: 'Content-Type, Accept',
   });
   app.use(cookieParser());
   app.enableShutdownHooks();

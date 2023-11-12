@@ -12,7 +12,6 @@ import {
   Query,
 } from '@nestjs/common';
 import { CategoryService } from './category.service';
-import { UUID } from 'crypto';
 import { CreateCategoryDto, UpdateCategoryDto } from './dtos';
 import { PageDto, PageOptionsDto } from '@/common/dtos';
 import { ApiNoContentResponse, ApiOkResponse } from '@nestjs/swagger';
@@ -32,7 +31,7 @@ export class CategoryController {
   @Get(':id')
   @HttpCode(HttpStatus.OK)
   @ApiOkResponse({ type: CategoryEntity })
-  getCategory(@Param('id', new ParseUUIDPipe()) id: UUID) {
+  getCategory(@Param('id', new ParseUUIDPipe({ version: '4' })) id: string) {
     return this.categoryService.getCategory(id);
   }
 
@@ -40,7 +39,7 @@ export class CategoryController {
   @HttpCode(HttpStatus.NO_CONTENT)
   @ApiNoContentResponse()
   updateCategory(
-    @Param('id', new ParseUUIDPipe()) id: UUID,
+    @Param('id', new ParseUUIDPipe({ version: '4' })) id: string,
     @Body() updateData: UpdateCategoryDto,
   ) {
     return this.categoryService.updateCategory(id, updateData);
@@ -49,7 +48,7 @@ export class CategoryController {
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
   @ApiNoContentResponse()
-  deleteCategory(@Param('id', new ParseUUIDPipe()) id: UUID) {
+  deleteCategory(@Param('id', new ParseUUIDPipe({ version: '4' })) id: string) {
     return this.categoryService.deleteCategory(id);
   }
 

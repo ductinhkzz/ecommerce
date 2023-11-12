@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm/repository/Repository';
 import { CreateManufacturerDto, UpdateManufacturerDto } from './dtos';
-import { UUID } from 'crypto';
 import { PaginationService } from '@/common/services';
 import { ManufacturerEntity } from '@/database/entities';
 import { PageOptionsDto } from '@/common/dtos';
@@ -23,15 +22,15 @@ export class ManufacturerService extends PaginationService<ManufacturerEntity> {
     return this.paginateQueryBuilder(query, options);
   }
 
-  async getManufacturer(id: UUID) {
+  async getManufacturer(id: string) {
     return this.findById(id);
   }
 
-  async updateManufacturer(id: UUID, updateData: UpdateManufacturerDto) {
+  async updateManufacturer(id: string, updateData: UpdateManufacturerDto) {
     return this.update(id, updateData);
   }
 
-  async deleteManufacturer(id: UUID) {
+  async deleteManufacturer(id: string) {
     return this.delete(id);
   }
 

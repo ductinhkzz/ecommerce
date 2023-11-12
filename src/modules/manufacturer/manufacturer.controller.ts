@@ -12,7 +12,6 @@ import {
   Query,
 } from '@nestjs/common';
 import { ManufacturerService } from './manufacturer.service';
-import { UUID } from 'crypto';
 import { CreateManufacturerDto, UpdateManufacturerDto } from './dtos';
 import { PageDto, PageOptionsDto } from '@/common/dtos';
 import { ApiNoContentResponse, ApiOkResponse } from '@nestjs/swagger';
@@ -32,7 +31,9 @@ export class ManufacturerController {
   @Get(':id')
   @HttpCode(HttpStatus.OK)
   @ApiOkResponse({ type: ManufacturerEntity })
-  getManufacturer(@Param('id', new ParseUUIDPipe()) id: UUID) {
+  getManufacturer(
+    @Param('id', new ParseUUIDPipe({ version: '4' })) id: string,
+  ) {
     return this.manufacturerService.getManufacturer(id);
   }
 
@@ -40,7 +41,7 @@ export class ManufacturerController {
   @HttpCode(HttpStatus.NO_CONTENT)
   @ApiNoContentResponse()
   updateManufacturer(
-    @Param('id', new ParseUUIDPipe()) id: UUID,
+    @Param('id', new ParseUUIDPipe({ version: '4' })) id: string,
     @Body() updateData: UpdateManufacturerDto,
   ) {
     return this.manufacturerService.updateManufacturer(id, updateData);
@@ -49,7 +50,9 @@ export class ManufacturerController {
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
   @ApiNoContentResponse()
-  deleteManufacturer(@Param('id', new ParseUUIDPipe()) id: UUID) {
+  deleteManufacturer(
+    @Param('id', new ParseUUIDPipe({ version: '4' })) id: string,
+  ) {
     return this.manufacturerService.deleteManufacturer(id);
   }
 
